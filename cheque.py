@@ -14,6 +14,9 @@ ERightArrowKey = 1802730496
 
 pages = ScriptingBridge.SBApplication.applicationWithBundleIdentifier_("com.apple.iwork.pages")
 pages.activate()
+document = pages.open_('/Users/isaac/Documents/Payout-check-maker.pages')
+time.sleep(1)
+
 event = ScriptingBridge.SBApplication.applicationWithBundleIdentifier_("com.apple.systemevents")
 
 def align_right():
@@ -49,10 +52,13 @@ def main():
 
     rows = client.GetListFeed( feed_str, worksheet_id ).entry
     for row in rows:
+        if not row.custom['check'].text: continue
         players = int(row.custom['players'].text)
 
         division_string = row.custom['division'].text or ''
         divisions = division_string.split()
+        if len(divisions) == 0:
+            divisions = ['']
         for division in divisions:
             for rank in ['1st', '2nd', '3rd', '4th', '5th-6th', '5th-6th', '7th-8th', '7th-8th']:
                 payout = row.custom[ 'rank' + rank ].text
@@ -60,6 +66,7 @@ def main():
                 payout_str = numToWords( payout_int )
                 memo = row.custom['event'].text + ' ' + division + ' on ' + row.custom['day'].text + ' - ' + rank
                 for p in range(players):
+                    pages.activate()
                     newline( 3 )
                     align_right()
                     type_out( date )
@@ -68,9 +75,9 @@ def main():
                     newline( 1 )
                     align_left()
                     type_out( '***** ' + payout_str.title() + ' *****' )
-                    newline( 3 )
+                    newline( 4 )
                     type_out( memo )
-                    newline( 5 )
+                    newline( 4 )
                     time.sleep(0.5)
 
 
