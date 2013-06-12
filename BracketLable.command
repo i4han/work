@@ -1,12 +1,26 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 import gdata.spreadsheet.service
 import time
 import sys
 import psycopg2
 import _pages
 
+EShiftDown   = 1265854068
+ECommandDown = 1264807268
+EOptionDown  = 1265594484
+EControlDown = 1264809068
+kVK_LeftArrow  = 0x7B
+kVK_RightArrow = 0x7C
+kVK_DownArrow  = 0x7D
+kVK_UpArrow    = 0x7E
 
 home = '/Users/isaac/Documents/'
+conn = psycopg2.connect( database ='djangostack',
+    host='dev.dartoo.com',
+    port='5432',
+    user='postgres', 
+    password='tnvkfdl2')
+
 
 class Gsheet22k():
     def __init__(__, tab ):
@@ -66,10 +80,12 @@ class Match():
 
 
 
-class Bracket():
-    def __init__(__, name, teams ):
+class Division():
+    def __init__(__, name, format, teams, pages ):
+        __.format = format
         __.name = name
         __.teams = teams
+        __.pages = pages
         __.match = [None] * 129
         __.seed = [None] * 65
         __.team_numbers = len( teams ) 
@@ -138,6 +154,25 @@ class Bracket():
         for row in __.match:
             if row and row.teams:
                 print row.id, ':', row.round, row.teams, row.ranking
+        __.pages.key_code( kVK_UpArrow, ECommandDown )
+        for i in range(1, 33):
+            for j in range(0, 2):
+                position = __.match[i].teams[j]     
+                __.pages.type_out( '%03d%02d%03d' % ( i, 1, position ) )
+                __.pages.key_code( kVK_DownArrow )
+                __.pages.type_out( __.teams[ str(position) ] )
+                __.pages.key_code( kVK_DownArrow ) 
+
+    def write_double(__):
+        key_code( kVK_UpArrow, ECommandDown )
+        for i in range(1, 33):
+            for j in range(0, 2):
+                position = __.match[i].teams[j]     
+                __.pages.type_out( '%03d%02d%03d' % ( i, 1, position ) )
+                __.pages.key_code( kVK_DownArrow )
+                __.pages.type_out( __.teams[ str(position) ] )
+                __.pages.key_code( kVK_DownArrow ) 
+
 
 #class Event():
 #    def __init__(__, players ):
@@ -164,7 +199,7 @@ def main():
             url = row.custom['value'].text
 
     pages = _pages.Pages( url, lines )
-    division = Bracket( 'Gold', teams, pages )
+    division = Division( 'Gold', 'Singles', teams, pages )
     division.write_single()
     division.round()
 

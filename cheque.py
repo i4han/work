@@ -1,6 +1,7 @@
 import ScriptingBridge
 import gdata.spreadsheet.service
 import time
+import shutil
 
 date = 'June 14, 2013'
 feed_str = 'tVc9gCzhh-seVwvaojke4Iw'
