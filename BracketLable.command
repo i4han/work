@@ -4,6 +4,7 @@ import time
 import sys
 import psycopg2
 import _pages
+import _gdrive
 
 EShiftDown   = 1265854068
 ECommandDown = 1264807268
@@ -20,34 +21,6 @@ conn = psycopg2.connect( database ='djangostack',
     port='5432',
     user='postgres', 
     password='tnvkfdl2')
-
-
-class Gsheet22k():
-    def __init__(__, tab ):
-        __.tab = tab
-        client = gdata.spreadsheet.service.SpreadsheetsService()
-        client.email = 'phoenix@dartoo.com'
-        client.password = '3355dartoO'
-        client.source = '22K'
-        client.ProgrammaticLogin()
-
-        feed__tr = 'tVc9gCzhh-seVwvaojke4Iw'
-        feed = client.GetWorksheetsFeed( feed__tr )
-        for entry in feed.entry:
-            worksheet_id = entry.id.text.rsplit('/',1)[1]
-            if entry.title.text == tab:
-                break
-
-        __.feed = client.GetListFeed( feed__tr, worksheet_id )
-
-
-
-#@unused
-class Player():
-    def __init__(__, name, stats=0.0, mobile='' ):
-        __.name = name
-        __.stats = stats
-        __.mobile = mobile
 
 
 
@@ -91,11 +64,12 @@ class Division():
         __.team_numbers = len( teams ) 
         __.byes = 64 - __.team_numbers
         __.bye = __.team_numbers + 1
+        __.label = _gdrive.Sheet('22K', 'Label')
         if __.byes:
             __.teams[ str(__.team_numbers + 1) ] = 'bye'
 
-        sheet = Gsheet22k( 'Bracket' )
-        rows = sheet.feed.entry
+        sheet = _gdrive.Sheet( '22K', 'Bracket' )
+        rows = sheet.listfeed.entry
         for row in rows:
             id = int( row.custom['id'].text )
             __.match[id] = Match( id=id,
@@ -108,6 +82,7 @@ class Division():
             if seed1: __.seed[ seed1 ] = id
             seed2 = int( row.custom['seed2'].text or 0 )
             if seed2: __.seed[ seed2 ] = id
+        print __.seed
         __.seeding( teams )
         __.put_byes()
 
@@ -154,14 +129,18 @@ class Division():
         for row in __.match:
             if row and row.teams:
                 print row.id, ':', row.round, row.teams, row.ranking
+        __.label.delete_all()
         __.pages.key_code( kVK_UpArrow, ECommandDown )
         for i in range(1, 33):
             for j in range(0, 2):
-                position = __.match[i].teams[j]     
-                __.pages.type_out( '%03d%02d%03d' % ( i, 1, position ) )
+                position = __.match[i].teams[j]
+                number = '%03d%02d%03d' % ( i, 1, position )    
+                __.pages.type_out( number )
                 __.pages.key_code( kVK_DownArrow )
-                __.pages.type_out( __.teams[ str(position) ] )
-                __.pages.key_code( kVK_DownArrow ) 
+                team = __.teams[ str(position) ]
+                __.pages.type_out( team )
+                __.pages.key_code( kVK_DownArrow )
+                __.label.insert({ 'number': number, 'team': team })
 
     def write_double(__):
         key_code( kVK_UpArrow, ECommandDown )
@@ -182,14 +161,14 @@ class Division():
 
 
 def main():
-    sheet = Gsheet22k( 'Gold' )
-    rows = sheet.feed.entry
+    sheet = _gdrive.Sheet('22K', 'Gold')
+    rows = sheet.listfeed.entry
     teams = {}
     for row in rows:
         teams[ row.custom['id'].text ] = row.custom['team'].text
 
-    sheet = Gsheet22k( 'Home' )
-    rows = sheet.feed.entry
+    sheet = _gdrive.Sheet('22K', 'Home')
+    rows = sheet.listfeed.entry
 
     lines = 1
     for row in rows:
@@ -198,7 +177,7 @@ def main():
         elif row.custom['key'].text == 'url':
             url = row.custom['value'].text
 
-    pages = _pages.Pages( url, lines )
+    pages = _pages.Label( url, lines )
     division = Division( 'Gold', 'Singles', teams, pages )
     division.write_single()
     division.round()

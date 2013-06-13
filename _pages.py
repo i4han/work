@@ -2,7 +2,7 @@ import ScriptingBridge
 import shutil
 
 
-class Pages():
+class Label():
     def __init__(__, url, lines=1):
         __.pages = ScriptingBridge.SBApplication.applicationWithBundleIdentifier_("com.apple.iwork.pages")
         __.pages.activate()
