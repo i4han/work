@@ -26,7 +26,13 @@ class index:
         for row in rows:
             pages.type_out( row.custom['number'].text )
             pages.key_code( kVK_DownArrow )
-            pages.type_out( row.custom['team'].text )
+            if lines == 2:
+                team1, team2 = row.custom['team1'].text.split(',')
+                pages.type_out( team1 )
+                pages.key_code( kVK_DownArrow ) 
+                pages.type_out( team2 )
+            else:
+                pages.type_out( row.custom['team'].text )
             pages.key_code( kVK_DownArrow ) 
 
         return "label print done"

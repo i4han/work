@@ -177,17 +177,21 @@ class Bracket():
             if len(teams) < 2:
                 print 'not yet'
                 return 
+
             teams.remove( winner_id )
             loser_id = teams.pop()
+
             winners_go = __.match[ match_id ]['winners_go']
-            __.match[ winners_go ]['teams'].append( winner_id )
-            if len(__.match[ winners_go ][ 'teams'] ) == 2:
-                ret.append( __.match[ winners_go ])
+            if winners_go:
+                __.match[winners_go]['teams'].append( winner_id )
+            if len(__.match[winners_go]['teams'] ) == 2:
+                ret.append(__.match[winners_go])
+    
             losers_go = __.match[ match_id ]['losers_go']
             if losers_go:
-                __.match[ losers_go ]['teams'].append( loser_id )
-            if len(__.match[ losers_go ][ 'teams'] ) == 2:
-                ret.append( __.match[ losers_go ])
+                __.match[losers_go]['teams'].append( loser_id )
+            if len(__.match[losers_go]['teams'] ) == 2:
+                ret.append(__.match[losers_go])
             return ret
 
 
