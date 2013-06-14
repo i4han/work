@@ -19,7 +19,9 @@ class index:
     def GET(self):
         sheet = _gdrive.Sheet('22K', 'Label')
         rows = sheet.listfeed.entry
-        pages = _pages.Label('/Users/isaac/Documents/', 1)
+        lines = 2 if rows[0].custom['team'].text.find(',') else 2
+        pages = _pages.Label('/Users/isaac/Documents/', lines)
+
         pages.key_code( kVK_UpArrow, ECommandDown )
         for row in rows:
             pages.type_out( row.custom['number'].text )

@@ -28,22 +28,6 @@ class Sheet():
     def delete(__, row=0):
         __.client.DeleteRow( __.listfeed.entry[ row ])
     def delete_all(__):
-        for i in range(len(__.listfeed.entry) - 1, -1, -1):
-            __.delete( i )
-
-"""
-def getRows(self):
-                       return self.gd_client.GetListFeed(key=self.key,wksht_id=self.wksht_id).entry
-                   def insertRow(self,row_data):
-                       return self.gd_client.InsertRow(row_data,key=self.key,wksht_id=self.wksht_id)
-                   def deleteRow(self,entry):
-                       return self.gd_client.DeleteRow(entry)
-                   def deleteAllRows(self):
-                       entrylist = self.getRows()
-                       i = 0
-                       for entry in entrylist:
-                           self.deleteRow(entry)
-                           i += 1
-                           print "deleted row ", i
-
-"""
+        map( lamba x: __.delete( x ), range(len(__.listfeed.entry) - 1, -1, -1))    
+    def update(__, row=0, row_data={}):
+        __.client.UpdateRow( __.listfeed.entry[ row ], row_data)
