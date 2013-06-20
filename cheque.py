@@ -78,7 +78,7 @@ def main():
                     type_out( '***** ' + payout_str.title() + ' *****' )
                     newline( 4 )
                     type_out( memo )
-                    newline( 4 )
+                    newline( 5 )
                     time.sleep(0.5)
 
 

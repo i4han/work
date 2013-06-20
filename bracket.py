@@ -175,7 +175,7 @@ class Bracket():
                     match_id = row['id']
             teams =  __.match[ match_id ]['teams'][:]
             if len(teams) < 2:
-                print 'not yet'
+                print 'not yet:', teams
                 return 
 
             teams.remove( winner_id )
@@ -194,4 +194,15 @@ class Bracket():
                 ret.append(__.match[losers_go])
             return ret
 
+
+if __name__ == '__main__':
+    bracket = Bracket(dict(map(lambda x: (str(x), str('%02d' % x)), range(1,65) )))
+    print bracket.match
+    for i in [48, 32, 8, 4, 2]:
+        for j in range(1, i + 1):
+            b = bracket.report(j)
+            print b
+            if len(b) > 0:
+                print j, b[0]['id'], '#',int(b[0]['id']) * 2 + 1 
+                print 
 

@@ -18,16 +18,25 @@ urls = (
 
 class index:
     def GET(self):
-        sheet = _gdrive.Sheet('22K', 'Label')
+        sheet = _gdrive.Sheet('22K', 'Blind')
         rows = sheet.listfeed.entry
-        pages = _pages.Label('/Users/isaac/Documents/', 3)
+        lines = 2 if rows[0].custom['team'].text.find(',') else 2
+        pages = _pages.Label('/Users/isaac/Documents/', lines)
 
         pages.key_code( kVK_UpArrow, ECommandDown )
         for row in rows:
+            pages.type_out( row.custom['number'].text )
             pages.key_code( kVK_DownArrow )
-            pages.type_out( row.custom['team'].text )
-            time.sleep(0.1)
- 
+            if lines == 2:
+                team1, team2 = row.custom['team'].text.split(',')
+                pages.type_out( team1 )
+                pages.key_code( kVK_DownArrow ) 
+                pages.type_out( team2 )
+                time.sleep(0.1)
+            else:
+                pages.type_out( row.custom['team'].text )
+            pages.key_code( kVK_DownArrow ) 
+
         return "label print done"
 
 if __name__ == "__main__":

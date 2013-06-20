@@ -28,6 +28,6 @@ class Sheet():
     def delete(__, row=0):
         __.client.DeleteRow( __.listfeed.entry[ row ])
     def delete_all(__):
-        map( lamba x: __.delete( x ), range(len(__.listfeed.entry) - 1, -1, -1))    
+        map( lambda x: __.delete( x ), range(len(__.listfeed.entry) - 1, -1, -1))    
     def update(__, row=0, row_data={}):
         __.client.UpdateRow( __.listfeed.entry[ row ], row_data)
