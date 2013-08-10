@@ -22,11 +22,38 @@ class Label():
     def home(__):
         __.type_out( UpArrow, CommandDown)
         __.type_out( RightArrow, CommandDown)
-        
+
     def down(__):
         __.type_out( DownArrow )        
+
     def type_out(__, key, option=0 ):
         __.event.keystroke_using_( key, option )
 
     def key_code(__, arg, option=0 ):
         __.event.keyCode_using_( arg, option )
+
+class Check():
+    def __init__(__, url):
+        __.pages = ScriptingBridge.SBApplication.applicationWithBundleIdentifier_("com.apple.iwork.pages")
+        __.pages.activate()
+        shutil.copy2( url + 'check-one-page.pages', url + 'check_temp.pages')
+        __.document = __.pages.open_( url + 'check_temp.pages')
+        __.event = ScriptingBridge.SBApplication.applicationWithBundleIdentifier_("com.apple.systemevents")
+
+    def home(__):
+        __.type_out( UpArrow, CommandDown)
+        __.type_out( RightArrow, CommandDown)
+
+    def copy_firt_page(__):
+        __.home()
+        __.type_out( 'v', CommandDown)
+
+    def down(__):
+        __.type_out( DownArrow )
+        
+    def type_out(__, key, option=0 ):
+        __.event.keystroke_using_( key, option )
+
+    def key_code(__, arg, option=0 ):
+        __.event.keyCode_using_( arg, option )
+
