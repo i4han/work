@@ -1,96 +1,59 @@
-import ScriptingBridge
-import gdata.spreadsheet.service
+import web
+import _gdrive
+import _pages
 import time
-import shutil
+import sys
 
-date = 'June 14, 2013'
-feed_str = 'tVc9gCzhh-seVwvaojke4Iw'
+class Main:
+    def __init__(__):
+        date = 'August 16, 2013'
+        check_number = 220001
 
-EShiftDown = 1265854068
-ECommandDown = 1264807268
-EOptionDown = 1265594484
-EControlDown = 1264809068
-ELeftArrowKey = 1802730240
-ERightArrowKey = 1802730496
+        pages = _pages.Check('/Users/isaac/Documents/')
+        sheet = _gdrive.Sheet('22K', 'Payout')
+        rows = sheet.listfeed.entry
+        time.sleep(2)
+        pages.home()
+        for row in rows:
+            print row.custom['event'].text
+            if not row.custom['check'].text: continue
+            players = int(row.custom['players'].text)
+            division_string = row.custom['division'].text or ''
+            divisions = division_string.split()
+            if len(divisions) == 0:
+                divisions = ['']
+            for division in divisions:
+                for rank in ['1st', '2nd', '3rd', '4th', '5th-6th', '5th-6th', '7th-8th', '7th-8th']:
+                    payout = row.custom[ 'rank' + rank ].text
+                    if not payout: continue
+                    payout_int = int(payout) / int( row.custom['players'].text )
+                    payout_per_winner = "{:,}".format( payout_int )
+                    payout_str = numToWords( payout_int )
+                    event_name = row.custom['event'].text + ' ' + division
+                    for p in range(players):
+                        pages.activate()
+                        pages.type_down( str(check_number) )
+                        pages.type_down( date )
+                        pages.type_down( '$' + payout_per_winner + '.00' )
+                        pages.type_down( '***** ' + payout_str.title() + ' *****' )
+                        time.sleep(0.5)
+                        pages.type_down( event_name )
+                        pages.type_down( rank )
+                        pages.type_down( 'c' + str(check_number) + 'c', 2 )
+                        time.sleep(0.5)
+                        pages.type_down( event_name )
+                        pages.type_down( rank )
+                        pages.type_down( '$' + payout_per_winner )
+                        pages.type_down( '$' + "{:,}".format( int( payout ) ), 2 )
 
-pages = ScriptingBridge.SBApplication.applicationWithBundleIdentifier_("com.apple.iwork.pages")
-pages.activate()
-document = pages.open_('/Users/isaac/Documents/Payout-check-maker.pages')
-time.sleep(1)
-
-event = ScriptingBridge.SBApplication.applicationWithBundleIdentifier_("com.apple.systemevents")
-
-def align_right():
-    event.keystroke_using_('}', ECommandDown)
-
-def align_left():
-    event.keystroke_using_('{', ECommandDown)
-
-def type_out( arg ):
-    event.keystroke_using_( arg, 0 )
-    newline( 1 )
-
-def select_line():
-    event.keystroke_using_( ELeftArrowKey, ECommandDown | EShiftDown )    
-
-def newline( arg ):
-    for i in range(arg):
-        event.keystroke_using_( "\r", 0 )
-
-def main():
-    client = gdata.spreadsheet.service.SpreadsheetsService()
-    client.email = 'phoenix@dartoo.com'
-    client.password = '3355dartoO'
-    client.source = '22K'
-    client.ProgrammaticLogin()
-
-    feed = client.GetWorksheetsFeed( feed_str )
-    for entry in feed.entry:
-        worksheet_id = entry.id.text.rsplit('/',1)[1]
-        print worksheet_id + ': ' + entry.title.text
-        if entry.title.text == 'Payout':
-            break
-
-    rows = client.GetListFeed( feed_str, worksheet_id ).entry
-    for row in rows:
-        if not row.custom['check'].text: continue
-        players = int(row.custom['players'].text)
-
-        division_string = row.custom['division'].text or ''
-        divisions = division_string.split()
-        if len(divisions) == 0:
-            divisions = ['']
-        for division in divisions:
-            for rank in ['1st', '2nd', '3rd', '4th', '5th-6th', '5th-6th', '7th-8th', '7th-8th']:
-                payout = row.custom[ 'rank' + rank ].text
-                payout_int = int(payout) / int( row.custom['players'].text )
-                payout_str = numToWords( payout_int )
-                memo = row.custom['event'].text + ' ' + division + ' on ' + row.custom['day'].text + ' - ' + rank
-                for p in range(players):
-                    pages.activate()
-                    newline( 3 )
-                    align_right()
-                    type_out( date )
-                    newline( 1 )
-                    type_out( '***** ' + str(payout_int) + '.00' )
-                    newline( 1 )
-                    align_left()
-                    type_out( '***** ' + payout_str.title() + ' *****' )
-                    newline( 4 )
-                    type_out( memo )
-                    newline( 5 )
-                    time.sleep(0.5)
+                        check_number += 1
+                        time.sleep(0.5)
 
 
 
-
-
-units = ["", "one", "two", "three", "four",  "five", 
-    "six", "seven", "eight", "nine "]
-teens = ["", "eleven", "twelve", "thirteen",  "fourteen", 
-    "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"]
-tens = ["", "ten", "twenty", "thirty", "forty",
-    "fifty", "sixty", "seventy", "eighty", "ninety"]
+units = ["", "one", "two", "three", "four",  "five", "six", "seven", "eight", "nine "]
+teens = ["", "eleven", "twelve", "thirteen",  "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"]
+tens = ["", "ten", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"]
 thousands = ["","thousand"]
 
 def numToWords(num):
@@ -129,5 +92,5 @@ def numToWords(num):
                 words.append(thousands[g])
     return ' '.join( words ) 
 
-main()
+if __name__ == "__main__": Main()
 

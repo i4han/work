@@ -25,9 +25,12 @@ class Sheet():
 
     def insert(__, row_data={}):
         __.client.InsertRow( row_data=row_data, key=__.key, wksht_id=__.sheet_id)
+
     def delete(__, row=0):
         __.client.DeleteRow( __.listfeed.entry[ row ])
+
     def delete_all(__):
         map( lambda x: __.delete( x ), range(len(__.listfeed.entry) - 1, -1, -1))    
+
     def update(__, row=0, row_data={}):
         __.client.UpdateRow( __.listfeed.entry[ row ], row_data)
