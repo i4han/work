@@ -7,7 +7,7 @@ import sys
 class Main:
     def __init__(__):
         date = 'August 16, 2013'
-        check_number = 220001
+        check_number = 220139
 
         pages = _pages.Check('/Users/isaac/Documents/')
         sheet = _gdrive.Sheet('22K', 'Payout')

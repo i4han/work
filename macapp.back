@@ -1,0 +1,484 @@
+import ScriptingBridge
+import shutil
+import time
+
+ShiftDown   = 1265854068
+CommandDown = 1264807268
+OptionDown  = 1265594484
+ControlDown = 1264809068
+LeftArrow   = 0x7B
+RightArrow  = 0x7C
+DownArrow   = 0x7D
+UpArrow     = 0x7E
+KeyC = 8
+
+do_not_call = ['allowsWeakReference','debugDescription','delete', 'description','dealloc','descriptionForSpecifier_','dictionaryWithValuesForKeys_'
+,'didChangeValueForKey_','finalize','retainWeakReference','specifierDescription','scriptingValueForSpecifier_','init','initWithObjects_','pop'
+,'removeObject_fromBothSidesOfRelationshipWithKey_','strokeColor','reveal','removeObject_fromPropertyWithKey_', 'select', 'removeObserver_forKeyPath_',
+'popitem', 'splitIntoColumns', 'splitIntoRows', 'willChangeValueForKey_', 'willChangeValueForKey_withSetMutation_usingObjects_',
+'willChange_valuesAtIndexes_forKey_','zone',
+'addColumnAfter', 'addColumnBefore', 'addRowAbove', 'addRowBelow', 'clear',
+'clearProperties']
+methods = [
+'accessibilityAddTemporaryChild_', 
+'accessibilityAllowsOverriddenAttributesWhenIgnored', 
+'accessibilityArrayAttributeCount_', 
+'accessibilityArrayAttributeValues_index_maxCount_', 
+'accessibilityAttributeValue_forParameter_', 
+'accessibilityAttributedValueForStringAttributeAttributeForParameter_', 
+'accessibilityDecodeOverriddenAttributes_', 
+'accessibilityEncodeOverriddenAttributes_', 
+'accessibilityIndexForChildUIElementAttributeForParameter_', 
+'accessibilityIndexOfChild_', 
+'accessibilityOverriddenAttributes', 
+'accessibilityParameterizedAttributeNames', 
+'accessibilityPresenterProcessIdentifier', 
+'accessibilityRemoveTemporaryChild_', 
+'accessibilitySetOverrideValue_forAttribute_', 
+'accessibilitySetPresenterProcessIdentifier_', 
+'accessibilityShouldSendNotification_', 
+'accessibilityShouldUseUniqueId', 
+'accessibilitySupportsNotifications', 
+'accessibilitySupportsOverriddenAttributes', 
+'accessibilityTemporaryChildren', 
+'addObject_toBothSidesOfRelationshipWithKey_', 
+'addObject_toPropertyWithKey_', 
+'addObserver_forKeyPath_options_context_', 
+'allPropertyKeys', 
+'allowsWeakReference', 
+'attributeKeys', 
+'autoContentAccessingProxy', 
+'autorelease', 
+'awakeAfterUsingCoder_', 
+'awakeFromNib', 
+'bind_toObject_withKeyPath_options_', 
+'childWithClass_code_keyForm_keyData_', 
+'childWithClass_code_keyForm_keyData_length_type_', 
+'childWithClass_code_keyForm_keyData_type_', 
+'childWithClass_code_keyForm_keyDesc_', 
+'classCode', 
+'classDescription', 
+'classDescriptionForDestinationKey_', 
+'classForArchiver', 
+'classForCoder', 
+'classForKeyedArchiver', 
+'classForPortCoder', 
+'classForScriptingClass_', 
+'className', 
+'classNamesForCodes', 
+'class__', 
+'classesForScriptingNames', 
+'clearProperties', 
+'codesForPropertyNames', 
+'coerceValueForScriptingProperties_', 
+'coerceValue_forKey_', 
+'conformsToProtocol_', 
+# 'context', 
+'copy', 
+'copyScriptingValue_forKey_withProperties_', 
+'createKeyValueBindingForKey_typeMask_', 
+'dealloc', 
+'debugDescription', 
+'delegate', 
+'description', 
+'descriptionForSpecifier_', 
+'dictionaryWithValuesForKeys_', 
+'didChangeValueForKey_', 
+'didChangeValueForKey_withSetMutation_usingObjects_', 
+'didChange_valuesAtIndexes_forKey_', 
+'doesContain_', 
+'doesNotRecognizeSelector_', 
+'elementArrayWithCode_', 
+'elementWithCode_ID_', 
+'elementWithCode_atIndex_', 
+'elementWithCode_named_', 
+'encodeWithCAMLWriter_', 'encodeWithCoder_', 'entityName', 'exists_', 'exposedBindings', 
+'finalize', 'flushKeyBindings', 'forwardInvocation_', 'forwardingTargetForSelector_', 'frontmost', 
+'get', 'handleQueryWithUnboundKey_', 'handleTakeValue_forUnboundKey_', 'hash', 'implementsSelector_', 'infoForBinding_', 
+'init', 'initWithApplication_specifier_', 'initWithBundleIdentifier_', 'initWithClass_properties_data_', 'initWithCoder_', 
+'initWithContext_', 'initWithContext_specifier_', 'initWithData_', 'initWithElementCode_properties_data_', 
+'initWithProcessIdentifier_', 'initWithProperties_', 'initWithURL_', 'insertValue_atIndex_inPropertyWithKey_', 
+'insertValue_inPropertyWithKey_', 'inverseForRelationshipKey_', 'isBlock', 'isCaseInsensitiveLike_', 'isEqualTo_', 
+'isEqual_', 'isFault', 'isGreaterThanOrEqualTo_', 'isGreaterThan_', 'isKindOfClass_', 'isLessThanOrEqualTo_', 'isLessThan_', 
+'isLike_', 'isMemberOfClass_', 'isNSArray__', 'isNSData__', 'isNSDate__', 'isNSDictionary__', 'isNSNumber__', 'isNSOrderedSet__', 
+'isNSSet__', 'isNSString__', 'isNSTimeZone__', 'isNSValue__', 'isNotEqualTo_', 'isProxy', 'isRangeSpecifier', 'isRunning', 
+'isToManyKey_', 'keyValueBindingForKey_typeMask_', 'lastError', 'launchFlags', 'methodDescriptionForSelector_', 
+'methodForSelector_', 'methodSignatureForSelector_', 'mutableArrayValueForKeyPath_', 'mutableArrayValueForKey_', 
+'mutableCopy', 'mutableOrderedSetValueForKeyPath_', 'mutableOrderedSetValueForKey_', 'mutableSetValueForKeyPath_', 
+'mutableSetValueForKey_', 'name', 'newScriptingObjectOfClass_forValueForKey_withContentsValue_properties_', 
+'nextSlicePiece_', 'objectSpecifier', 'objectWithSpecifier_', 'observationInfo', 
+'observeValueForKeyPath_ofObject_change_context_', 'open_', 'optionDescriptionsForBinding_', 'otherBookmarks', 
+'ownsDestinationObjectsForRelationshipKey_', 'performSelectorInBackground_withObject_', 
+'performSelectorOnMainThread_withObject_waitUntilDone_', 'performSelectorOnMainThread_withObject_waitUntilDone_modes_', 
+'performSelector_', 'performSelector_object_afterDelay_', 'performSelector_onThread_withObject_waitUntilDone_', 
+'performSelector_onThread_withObject_waitUntilDone_modes_', 'performSelector_withObject_', 
+'performSelector_withObject_afterDelay_', 'performSelector_withObject_afterDelay_inModes_', 
+'performSelector_withObject_withObject_', 'positionAfter', 'positionBefore', 'properties', 'propertyWithClass_code_', 
+'propertyWithCode_', 'pyobjc_ISA', 'pyobjc_instanceMethods', 'pyobjc_performSelector:onThread:withObject:', 
+'pyobjc_performSelector:onThread:withObject:modes:', 'pyobjc_performSelector:onThread:withObject:waitUntilDone:', 
+'pyobjc_performSelector:onThread:withObject:waitUntilDone:modes:', 'pyobjc_performSelector:withObject:afterDelay:', 
+'pyobjc_performSelector:withObject:afterDelay:inModes:', 'pyobjc_performSelectorInBackground:withObject:', 
+'pyobjc_performSelectorInBackground_withObject_', 'pyobjc_performSelectorOnMainThread:withObject:', 
+'pyobjc_performSelectorOnMainThread:withObject:modes:', 'pyobjc_performSelectorOnMainThread:withObject:waitUntilDone:', 
+'pyobjc_performSelectorOnMainThread:withObject:waitUntilDone:modes:', 'pyobjc_performSelectorOnMainThread_withObject_', 
+'pyobjc_performSelectorOnMainThread_withObject_modes_', 'pyobjc_performSelectorOnMainThread_withObject_waitUntilDone_', 
+'pyobjc_performSelectorOnMainThread_withObject_waitUntilDone_modes_', 'pyobjc_performSelector_onThread_withObject_', 
+'pyobjc_performSelector_onThread_withObject_modes_', 'pyobjc_performSelector_onThread_withObject_waitUntilDone_', 
+'pyobjc_performSelector_onThread_withObject_waitUntilDone_modes_', 'pyobjc_performSelector_withObject_afterDelay_', 
+'pyobjc_performSelector_withObject_afterDelay_inModes_', 
+'qualifiedSpecifier', 'qualify_', 'quit', 'release', 
+'removeObject_fromBothSidesOfRelationshipWithKey_', 
+'removeObject_fromPropertyWithKey_', 
+'removeObserver_forKeyPath_', 'removeObserver_forKeyPath_context_', 'removeValueAtIndex_fromPropertyWithKey_', 
+'replaceValueAtIndex_inPropertyWithKey_withValue_', 'replacementObjectForArchiver_', 'replacementObjectForCoder_', 
+'replacementObjectForKeyedArchiver_', 'replacementObjectForPortCoder_', 'respondsToSelector_', 
+'retain', 
+'retainCount', 
+'retainWeakReference', 'scriptingProperties', 'scriptingValueForSpecifier_', 'self', 'sendEvent_id_format_', 
+'sendEvent_id_parameters_', 'sendMode', 'setDelegate_', 'setLastError_', 'setLaunchFlags_', 'setNilValueForKey_', 
+'setObservationInfo_', 'setScriptingProperties_', 'setSendMode_', 'setTimeout_', 'setTo_', 'setUserInterfaceItemIdentifier_', 
+'setValue_forKeyPath_', 'setValue_forKey_', 'setValue_forUndefinedKey_', 'setValuesForKeysWithDictionary_', 'shouldCreateClasses', 
+'specifier', 'specifierDescription', 'storedValueForKey_', 'superclass', 'takeStoredValue_forKey_', 
+'takeStoredValuesFromDictionary_', 'takeValue_forKeyPath_', 'takeValue_forKey_', 'takeValuesFromDictionary_', 
+'timeout', 
+'toManyRelationshipKeys', 'toOneRelationshipKeys', 'unableToSetNilForKey_', 'unbind_', 'userInterfaceItemIdentifier', 
+'validateTakeValue_forKeyPath_', 'validateValue_forKeyPath_error_', 'validateValue_forKey_', 'validateValue_forKey_error_', 
+'valueAtIndex_inPropertyWithKey_', 'valueClassForBinding_', 'valueForKeyPath_', 'valueForKey_', 'valueForUndefinedKey_', 
+'valueWithName_inPropertyWithKey_', 'valueWithUniqueID_inPropertyWithKey_', 'valuesForKeys_', 
+'version', 'willChangeValueForKey_', 'willChangeValueForKey_withSetMutation_usingObjects_', 'willChange_valuesAtIndexes_forKey_', 
+# 'windows', 
+'zone']
+
+
+def app( indentifier ):
+    return ScriptingBridge.SBApplication.applicationWithBundleIdentifier_( indentifier )
+
+
+class Object():
+    def __init__(__):
+        __.current_obj = None
+    def find(__, obj, name ):
+        print "finding obj: ", name
+        for i in obj:
+            print i.name()
+            if i.name() == name:
+                __.current_obj = i
+                return True
+        return False
+
+    def get(__):
+        return __.current_obj
+
+
+class Key():
+    def __init__(__):
+        __.key = app("com.apple.systemevents")
+
+    def home(__):
+        __.key_code( UpArrow, CommandDown )
+
+    def newline(__, arg=1 ):
+        map(__.type_out( '\r' ), [None] * arg )
+
+    def up(__, arg=1 ):
+        map(__.key_code( UpArrow ), [None] * arg )
+
+    def down(__, arg=1 ):
+        map(__.key_code( DownArrow ), [None] * arg )
+
+    def page_break(__):
+        __.type_out( '\r', ControlDown ) # user defined control-Enter for page break.
+
+    def type_down(__, keys, arg=1 ):
+        __.type_out( keys )
+        map(__.down(), [None] * arg ) 
+
+    def type_out(__, key, option=0 ):
+        __.key.keystroke_using_( key, option )
+
+    def key_code(__, arg, option=0 ):
+        __.key.keyCode_using_( arg, option )
+
+
+class Printer():
+    def __init__(__):
+        print 'key init'
+        __.print_app = app("com.apple.print.PrintCenter")
+        __.currentPrinter = __.print_app.currentPrinter()
+        __.default = __.currentPrinter
+        __.printers = __.print_app.printers()
+
+    def current(__, name='' ):
+        if name:
+            for i in __.printers:
+                if i.name() == name:
+                    __.app.setCurrentPrinter_(i)
+                    __.currentPrinter = __.print_app.currentPrinter()
+        return __.currentPrinter
+
+    def default(__):
+        __.app.setCurrentPrinter_( __.default )
+
+
+
+
+class Label( Key ):
+    def __init__(__, url, lines=1):
+        Key.__init__(__)
+        __.pages = app("com.apple.iwork.pages")
+        __.pages.activate()
+        shutil.copy2( url + 'participants-%1d.pages' % lines, url + 'participants.pages')
+        __.document = __.pages.open_( url + 'participants.pages')
+
+
+class Check( Key ):
+    def __init__(__, url):
+        Key.__init__(__)
+        __.pages = app("com.apple.iwork.pages")
+        __.pages.activate()
+        shutil.copy2( url + 'check-one.pages', url + 'check_temp.pages')
+        __.document = __.pages.open_( url + 'check_temp.pages')
+        __.pages.activate()
+
+    def activate(__):
+        __.pages.activate()
+
+
+class Pages( Key, Printer ):
+    def __init__(__):
+        Key.__init__(__)
+        __.app = app("com.apple.iwork.pages")
+        __.app.activate()
+        __.documents = __.app.documents().get()
+
+    def document__(__, name):
+        __.document = find(__.documents, name)
+
+        
+        p = i.bodyText().paragraphs()[0]
+#        prop = p.properties()
+#        prop['contents'] = 'new world'
+#        print prop
+#        p.setTo_('new world')
+#        p.setProperties_( prop )
+#        p.properties().allValues()[p.properties().allKeys().index('contents')] = 'new'
+        print p.text()[2].get()
+        i.bodyText().paragraphs()[1].setTo_('This is it\n')
+        print '=' * 100
+#        i.setBodyText_("Hello\nworld") # worked fine
+
+    def setProperties(__):
+        """
+        setAlignment_
+        setBold_
+        setCharacterBackgroundColor_
+        setCharacterStyle_
+        setCollapsed_
+        setColor_
+        setFirstLineIndent_
+        setFollowingParagraphStyle_
+        setFontName_
+        setFontSize_
+        setFont_
+        setHidden_
+        setIndentLevel_
+        setItalic_
+        setKeepLinesTogether_
+        setKeepWithNextParagraph_
+        setLabelBaselineShift_
+        setLeftIndent_
+        setLigatures_
+        setLineSpacingType_
+        setLineSpacing_
+        setListStyle_
+        setNilValueForKey_
+        setOutline_
+        setParagraphBackgroundColor_
+        setParagraphStyle_
+        setPreventWidowsAndOrphans_
+        setProperties_
+        setRemoveHyphenation_
+        setRightIndent_
+        setScaleWithText_
+        setScriptingProperties_
+        setShadowAngle_
+        setShadowBlur_
+        setShadowColor_
+        setShadowOffset_
+        setShadowOpacity_
+        setShadow_
+        setSize_
+        setSpaceAfter_
+        setSpaceBefore_
+        setStartNewPage_
+        setStrikethroughColor_
+        setStrikethroughType_
+        setSubscript_
+        setSuperscript_
+        setTextIndent_
+        setTextLabelString_
+        setTo_
+        setTracking_
+        setUnderlineColor_
+        setUnderlineType_
+        """
+
+    def print__(__):
+        __.app.print_printDialog_withProperties_(i, False, None)
+
+    def activate(__):
+        __.app.activate()
+
+
+
+class Cell():
+    def __init__(__, cell):
+        __.cell = cell
+
+    def value(__, value=None):
+        if value:
+            __.cell.setValue_( value )
+        properties = __.cell.properties()
+        return properties['value']
+
+
+
+class Numbers( Key ):
+    def __init__(__):
+        Key.__init__(__)
+        __.obj = Object()
+        __.app = app("com.apple.iwork.numbers")
+        __.app.activate()
+        __.documents = __.app.documents().get()
+        __.current_document = None
+        __.current_sheet = None
+        __.current_table = None
+        __.current_cell = None
+        
+
+    def document(__, name='' ):
+        if __.obj.find( __.documents, name):
+            __.current_document = __.obj.get()
+            __.sheets = __.current_document.sheets().get()
+            return __
+
+    def sheet(__, name):
+        if __.obj.find( __.sheets, name):
+            __.current_sheet = __.obj.get()
+            __.tables = __.current_sheet.tables().get()
+            return __
+
+    def table(__, name):
+        if __.obj.find(__.tables, name):
+            __.current_table = __.obj.get()
+            __.cells = __.current_table.cells().get()
+            __.rows  = __.current_table.rows().get()
+            __.columns = __.current_table.columns().get()
+            return __
+
+    def cell(__, name):
+        if __.obj.find(__.cells, name):
+            __.current_cell = __.obj.get()
+            __.Cell = Cell( __.current_cell )
+            return __
+
+    def offset(__, row, column):
+        ascii = ord('A')
+        digit2 = chr( ascii + column / 26 % 26 - 1) if column > 25 else '' 
+        digit1 = chr( ascii + column % 26 )
+        return __.cell( digit2 + digit1 + str( row + 1 ) )
+
+class iTunes( Key ):
+    def __init__(__):
+        Key.__init__(__)
+        __.app = app("com.apple.itunes")
+        __.app.activate()
+        __.windows = __.app.windows().get()
+        __.tabs = __.window[-1].tabs()
+        __.tab = __.tabs[-1]
+#p = {'name':'Testing'}
+#playlist = iTunes.classForScriptingClass_("playlist").alloc().initWithProperties_(p)
+#iTunes.sources()[0].playlists().insertObject_atIndex_(playlist, 0)
+
+
+
+class Chrome( Key ):
+    def __init__(__):
+        Key.__init__(__)
+        __.app = app("com.google.chrome")
+        __.app.activate()
+        __.windows = __.app.windows().get()
+        __.tabs = __.window[-1].tabs()
+        __.tab = __.tabs[-1]
+
+    def url(__, location ):
+        __.tab.setURL_( location )
+
+    def javascript(__, source ):
+        __.tab.executeJavascript_( source )
+
+    def selectAll(__):
+        __.tab.selectAll()
+
+    def copy(__):
+        __.tab.copySelection()
+
+    def viewSource(__):
+        __.tab.viewSource()
+
+
+
+def dirs( obj ):
+    method_dir = filter( lambda x: x[0] != '_' and x[0] != 'C', list( set( dir( obj ) ).difference( do_not_call ) ) )
+    if not (method_dir is None):
+        method_dir.sort()
+        for i in method_dir:
+            print i
+            if not i: return
+            if i < 'b': continue
+            if i > 'z': continue
+            print i
+            try:
+                out = getattr( obj, i)()
+                print out
+            except (TypeError, ValueError):
+                pass
+
+
+if __name__ == '__main__':
+    n = Numbers()
+    n.document('Untitled 21').sheet('Sheet 1').table('Table 1')
+    n.cell('C2')
+    print n.current_table
+    dirs( n.current_cell )
+
+
+    n.Cell.value('Hello World')
+    print n.Cell.value()
+#    print n.cell.allPropertyKeys()
+#    print n.cell.attributeKeys()
+ 
+
+
+#    p = Printer()
+#    print p.current().name()
+#    print p.current('brother_ql-700@krypton').name()
+
+
+
+#    p = Pages()
+
+    """
+    print '_'*100 
+    print p.cells
+    dirs( p.cell )
+    print p.cell.value().get() 
+    print p.table.rows().get()
+    p.cell.setValue_(1)
+    print p.cell.value().get() 
+    c = Chrome()
+    print '_' * 200
+    dirs( c.chrome )
+    dirs( tab )
+"""
+#    dirs( p.printer )

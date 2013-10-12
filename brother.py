@@ -17,7 +17,7 @@ class api:
 		return name
 
 class Label:
-	def __init__(__, ip_address='192.168.0.250', mode='label' ):
+	def __init__(__, ip_address='192.168.0.251', mode='label' ):
 		__.host = ip_address
 		__.port = 9100
 		__.job = None

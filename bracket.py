@@ -1,7 +1,8 @@
 #!/usr/bin/python
        
  
-matches = [ {'teams':[], 'ranking': None, 'losers_go': None, 'winners_go': None, 'id': 0, 'round': 0},
+matches = [ 
+    {'teams':[], 'ranking': None, 'losers_go': None, 'winners_go': None, 'id': 0, 'round': 0},
     {'teams':[], 'ranking': None, 'losers_go': 64, 'winners_go': 33, 'id': 1, 'round': 1},
     {'teams':[], 'ranking': None, 'losers_go': 64, 'winners_go': 33, 'id': 2, 'round': 1},
     {'teams':[], 'ranking': None, 'losers_go': 65, 'winners_go': 34, 'id': 3, 'round': 1},

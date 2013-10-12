@@ -1,0 +1,340 @@
+finding obj:  Untitled 21
+Untitled 21
+finding obj:  Sheet 1
+Sheet 1
+finding obj:  Table 1
+Table 1
+finding obj:  C2
+A1
+B1
+C1
+D1
+E1
+F1
+G1
+H1
+I1
+J1
+K1
+L1
+M1
+N1
+O1
+P1
+Q1
+R1
+S1
+T1
+U1
+V1
+W1
+X1
+Y1
+Z1
+A2
+B2
+C2
+backgroundColor
+None
+bind_toObject_withKeyPath_options_
+cells
+<SBElementArray @0xeb2cd400: every NumbersCell of NumbersCell "C2" of NumbersTable "Table 1" of NumbersSheet "Sheet 1" of NumbersDocument "Untitled 21" of application "Numbers" (2810)>
+childWithClass_code_keyForm_keyData_
+childWithClass_code_keyForm_keyData_length_type_
+childWithClass_code_keyForm_keyData_type_
+childWithClass_code_keyForm_keyDesc_
+classCode
+0
+classDescription
+None
+classDescriptionForDestinationKey_
+classForArchiver
+<objective-c class NumbersCell at 0x7fb8e96926d0>
+classForCoder
+<objective-c class NumbersCell at 0x7fb8e96926d0>
+classForKeyedArchiver
+<objective-c class NumbersCell at 0x7fb8e96926d0>
+classForPortCoder
+<objective-c class NumbersCell at 0x7fb8e96926d0>
+className
+NumbersCell
+class__
+<objective-c class NumbersCell at 0x7fb8e96926d0>
+closeSaving_savingIn_
+coerceValueForScriptingProperties_
+coerceValue_forKey_
+column
+<NumbersColumn @0xe96afe10: column of NumbersCell "C2" of NumbersTable "Table 1" of NumbersSheet "Sheet 1" of NumbersDocument "Untitled 21" of application "Numbers" (2810)>
+columns
+<SBElementArray @0xe96b1d90: every NumbersColumn of NumbersCell "C2" of NumbersTable "Table 1" of NumbersSheet "Sheet 1" of NumbersDocument "Untitled 21" of application "Numbers" (2810)>
+conformsToProtocol_
+context
+application "Numbers" (2810)
+copy
+copyScriptingValue_forKey_withProperties_
+createKeyValueBindingForKey_typeMask_
+didChangeValueForKey_withSetMutation_usingObjects_
+didChange_valuesAtIndexes_forKey_
+doesContain_
+doesNotRecognizeSelector_
+duplicateTo_withProperties_
+elementArrayWithCode_
+elementWithCode_ID_
+elementWithCode_atIndex_
+elementWithCode_named_
+encodeWithCAMLWriter_
+encodeWithCoder_
+entityName
+None
+exists
+True
+exposedBindings
+(
+    textColor
+)
+flushKeyBindings
+None
+fontName
+HelveticaNeue
+fontSize
+10.0
+format
+1717663092
+forwardInvocation_
+forwardingTargetForSelector_
+get
+<NumbersCell @0xe937a560: NumbersCell "C2" of NumbersTable "Table 1" of NumbersSheet "Sheet 1" of NumbersDocument "Untitled 21" of application "Numbers" (2810)>
+handleQueryWithUnboundKey_
+handleTakeValue_forUnboundKey_
+hash
+140432198638544
+implementsSelector_
+infoForBinding_
+initWithApplication_specifier_
+initWithClass_properties_data_
+initWithCoder_
+initWithContext_specifier_
+initWithData_
+initWithElementCode_properties_data_
+initWithProperties_
+insertValue_atIndex_inPropertyWithKey_
+insertValue_inPropertyWithKey_
+inverseForRelationshipKey_
+isBlock
+0
+isCaseInsensitiveLike_
+isEqualTo_
+isEqual_
+isFault
+0
+isGreaterThanOrEqualTo_
+isGreaterThan_
+isKindOfClass_
+isLessThanOrEqualTo_
+isLessThan_
+isLike_
+isMemberOfClass_
+isNSArray__
+0
+isNSData__
+0
+isNSDate__
+0
+isNSDictionary__
+0
+isNSNumber__
+0
+isNSOrderedSet__
+0
+isNSSet__
+0
+isNSString__
+0
+isNSTimeZone__
+0
+isNSValue__
+0
+isNotEqualTo_
+isProxy
+False
+isRangeSpecifier
+0
+isToManyKey_
+keyValueBindingForKey_typeMask_
+lastError
+None
+merge
+None
+methodDescriptionForSelector_
+methodForSelector_
+methodSignatureForSelector_
+moveTo_
+mutableArrayValueForKeyPath_
+mutableArrayValueForKey_
+mutableCopy
+mutableOrderedSetValueForKeyPath_
+mutableOrderedSetValueForKey_
+mutableSetValueForKeyPath_
+mutableSetValueForKey_
+name
+C2
+newScriptingObjectOfClass_forValueForKey_withContentsValue_properties_
+nextSlicePiece_
+objectClass
+<NSAppleEventDescriptor: 'NmCl'>
+objectSpecifier
+None
+observationInfo
+0
+observeValueForKeyPath_ofObject_change_context_
+optionDescriptionsForBinding_
+ownsDestinationObjectsForRelationshipKey_
+performSelectorInBackground_withObject_
+performSelectorOnMainThread_withObject_waitUntilDone_
+performSelectorOnMainThread_withObject_waitUntilDone_modes_
+performSelector_
+performSelector_object_afterDelay_
+performSelector_onThread_withObject_waitUntilDone_
+performSelector_onThread_withObject_waitUntilDone_modes_
+performSelector_withObject_
+performSelector_withObject_afterDelay_
+performSelector_withObject_afterDelay_inModes_
+performSelector_withObject_withObject_
+positionAfter
+<SBRelativePosition @0xeb61f440: { 'kobj':'obj '{ 'from':'obj '{ 'from':'obj '{ 'from':'obj '{ 'from':null(), 'want':'docu', 'form':'name', 'seld':'utxt'("Untitled 21") }, 'want':'NmSh', 'form':'name', 'seld':'utxt'("Sheet 1") }, 'want':'NmTb', 'form':'name', 'seld':'utxt'("Table 1") }, 'want':'NmCl', 'form':'name', 'seld':'utxt'("C2") }, 'kpos':'afte' }>
+positionBefore
+<SBRelativePosition @0xeb71ede0: { 'kobj':'obj '{ 'from':'obj '{ 'from':'obj '{ 'from':'obj '{ 'from':null(), 'want':'docu', 'form':'name', 'seld':'utxt'("Untitled 21") }, 'want':'NmSh', 'form':'name', 'seld':'utxt'("Sheet 1") }, 'want':'NmTb', 'form':'name', 'seld':'utxt'("Table 1") }, 'want':'NmCl', 'form':'name', 'seld':'utxt'("C2") }, 'kpos':'befo' }>
+properties
+{
+    alignment = "<NSAppleEventDescriptor: 'aaut'>";
+    backgroundColor = "<null>";
+    column = "<NumbersColumn @0xe96bd920: NumbersColumn \"C\" of NumbersTable \"Table 1\" of NumbersSheet \"Sheet 1\" of NumbersDocument \"Untitled 21\" of application \"Numbers\" (2810)>";
+    fontName = HelveticaNeue;
+    fontSize = 10;
+    format = "<NSAppleEventDescriptor: 'faut'>";
+    name = C2;
+    objectClass = "<NSAppleEventDescriptor: 'NmCl'>";
+    row = "<NumbersRow @0xe96bfef0: NumbersRow \"2\" of NumbersTable \"Table 1\" of NumbersSheet \"Sheet 1\" of NumbersDocument \"Untitled 21\" of application \"Numbers\" (2810)>";
+    textColor = "NSCalibratedRGBColorSpace 0 0 0 0";
+    textWrap = 0;
+    value = help;
+    verticalAlignment = "<NSAppleEventDescriptor: 'avtp'>";
+}
+propertyWithClass_code_
+propertyWithCode_
+pyobjc_ISA
+pyobjc_instanceMethods
+pyobjc_performSelector:onThread:withObject:
+pyobjc_performSelector:onThread:withObject:modes:
+pyobjc_performSelector:onThread:withObject:waitUntilDone:
+pyobjc_performSelector:onThread:withObject:waitUntilDone:modes:
+pyobjc_performSelector:withObject:afterDelay:
+pyobjc_performSelector:withObject:afterDelay:inModes:
+pyobjc_performSelectorInBackground:withObject:
+pyobjc_performSelectorInBackground_withObject_
+pyobjc_performSelectorOnMainThread:withObject:
+pyobjc_performSelectorOnMainThread:withObject:modes:
+pyobjc_performSelectorOnMainThread:withObject:waitUntilDone:
+pyobjc_performSelectorOnMainThread:withObject:waitUntilDone:modes:
+pyobjc_performSelectorOnMainThread_withObject_
+pyobjc_performSelectorOnMainThread_withObject_modes_
+pyobjc_performSelectorOnMainThread_withObject_waitUntilDone_
+pyobjc_performSelectorOnMainThread_withObject_waitUntilDone_modes_
+pyobjc_performSelector_onThread_withObject_
+pyobjc_performSelector_onThread_withObject_modes_
+pyobjc_performSelector_onThread_withObject_waitUntilDone_
+pyobjc_performSelector_onThread_withObject_waitUntilDone_modes_
+pyobjc_performSelector_withObject_afterDelay_
+pyobjc_performSelector_withObject_afterDelay_inModes_
+qualifiedSpecifier
+<NSAppleEventDescriptor: 'obj '{ 'want':'NmCl', 'form':'name', 'seld':'utxt'("C2"), 'from':'obj '{ 'want':'NmTb', 'form':'name', 'seld':'utxt'("Table 1"), 'from':'obj '{ 'want':'NmSh', 'form':'name', 'seld':'utxt'("Sheet 1"), 'from':'obj '{ 'want':'docu', 'form':'name', 'seld':'utxt'("Untitled 21"), 'from':[0x0,467467 "Numbers"] } } } }>
+qualify_
+release
+None
+remove
+None
+removeObserver_forKeyPath_context_
+removeValueAtIndex_fromPropertyWithKey_
+replaceValueAtIndex_inPropertyWithKey_withValue_
+replacementObjectForArchiver_
+replacementObjectForCoder_
+replacementObjectForKeyedArchiver_
+replacementObjectForPortCoder_
+respondsToSelector_
+retain
+<NumbersCell @0xeb509bd0: NumbersCell "C2" of NumbersTable "Table 1" of NumbersSheet "Sheet 1" of NumbersDocument "Untitled 21" of application "Numbers" (2810)>
+retainCount
+5
+row
+<NumbersRow @0xe96ce300: row of NumbersCell "C2" of NumbersTable "Table 1" of NumbersSheet "Sheet 1" of NumbersDocument "Untitled 21" of application "Numbers" (2810)>
+rows
+<SBElementArray @0xe96cd840: every NumbersRow of NumbersCell "C2" of NumbersTable "Table 1" of NumbersSheet "Sheet 1" of NumbersDocument "Untitled 21" of application "Numbers" (2810)>
+saveAs_in_
+scriptingProperties
+{
+}
+self
+<NumbersCell @0xeb509bd0: NumbersCell "C2" of NumbersTable "Table 1" of NumbersSheet "Sheet 1" of NumbersDocument "Untitled 21" of application "Numbers" (2810)>
+sendEvent_id_format_
+sendEvent_id_parameters_
+setAlignment_
+setBackgroundColor_
+setFontName_
+setFontSize_
+setFormat_
+setLastError_
+setNilValueForKey_
+setObservationInfo_
+setProperties_
+setScriptingProperties_
+setTextColor_
+setTextWrap_
+setTo_
+setUserInterfaceItemIdentifier_
+setValue_
+setValue_forKeyPath_
+setValue_forKey_
+setValue_forUndefinedKey_
+setValuesForKeysWithDictionary_
+setVerticalAlignment_
+specifier
+<PyObjCPointer object at 0x109b0d5b0>
+storedValueForKey_
+superclass
+<objective-c class NumbersRange at 0x7fb8eb456480>
+takeStoredValue_forKey_
+takeStoredValuesFromDictionary_
+takeValue_forKeyPath_
+takeValue_forKey_
+takeValuesFromDictionary_
+textColor
+NSCalibratedRGBColorSpace 0 0 0 0
+textWrap
+False
+toManyRelationshipKeys
+None
+toOneRelationshipKeys
+None
+unableToSetNilForKey_
+unbind_
+unmerge
+None
+userInterfaceItemIdentifier
+None
+validateTakeValue_forKeyPath_
+validateValue_forKeyPath_error_
+validateValue_forKey_
+validateValue_forKey_error_
+value
+<SBObject @0xeb712e10: value of NumbersCell "C2" of NumbersTable "Table 1" of NumbersSheet "Sheet 1" of NumbersDocument "Untitled 21" of application "Numbers" (2810)>
+valueAtIndex_inPropertyWithKey_
+valueClassForBinding_
+valueForKeyPath_
+valueForKey_
+valueForUndefinedKey_
+valueWithName_inPropertyWithKey_
+valueWithUniqueID_inPropertyWithKey_
+valuesForKeys_
+verticalAlignment
+1635153008
+help
