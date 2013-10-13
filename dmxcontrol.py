@@ -48,6 +48,11 @@ class Light():
 		__.light[ str(__.address[name]['id']) ].set( __.address[name]['address'], value)
 		__.address[ name ]['value'] = value
 		# print 'sending:', __.address[name]['id'],  __.address[name]['address'], value
+	def send_direct(__, light):
+		for l in light:
+			__.light[ l[0] ].set( l[1], l[2] )
+
+	def send_dmx(__):
 		__.dmxman.send()
 
 	def sendline(__, dct ):
@@ -60,6 +65,14 @@ class Light():
 				__.light[ str(__.address[ key ]['id']) ].set( __.address[ key ]['address'], dct[ key ])
 				__.dmxman.send()
 			
+	def line(__, dct ):
+		light_line = []
+		if dct != None:
+			for key in dct:
+				if key == 'beat':
+					continue
+				light_line.append([str(__.address[ key ]['id']), __.address[ key ]['address'], dct[ key ] ])
+		return light_line
 			
 			
 
@@ -82,7 +95,7 @@ def main():
 		l.add_light( id=i, start=point['start'], length=point['length'] )
 	for i in range( 0, n_addresses ):
 		point = Show['address'][i]
-		# print 'point:', point
+		print 'point:', point
 		l.add_address( name=point['name'], id=point['id'], address=point['address'] )
 	for i in range( 1, n_lights + 1):
 		l.print_light( i )
@@ -91,24 +104,27 @@ def main():
 
 	Play = []
 	for line in Show['timeline']:
+		print line
 		beat = line['beat']
-		timing += float( beat ) 
-		Play.append({'timing': timing, 'send': line})
-
-	playsong('Summer')
-	start = datetime.now()
+		timing += beat 
+		Play.append({'timing': float(timing), 'send': l.line( line )})
 
 	print 'Lines:', len(Show['timeline'])
-	i = 1
-	for line in Play:
-		i += 1
-
+	print 'Play:', Play
+	
+	l.send_direct( Play[0]['send'] )
+	playsong('Summer')
+	start = datetime.now()
+	for i in range(1, len(Play)):
+		l.send_dmx()
+		l.send_direct( Play[i]['send'] )
 		delta = datetime.now() - start
 		lapse = delta.seconds + delta.microseconds / 1000000.
-		delay = max(  line['timing'] / bpm - lapse, 0 )
+		delay = max(  Play[i-1]['timing'] / bpm - lapse, 0 )
 		time.sleep( delay )
-		print 'line:', i, line['send']
-		l.sendline( line['send'] )
+
+
+
 
 
 

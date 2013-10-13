@@ -4,6 +4,8 @@ import macapp
 
 isfloat = re.compile('^[0-9.]+$')
 
+start_column = 3
+
 def value(cell):
 	ret = macapp.Cell(cell).value()
 	ret = '{}'.format( ret )
@@ -35,7 +37,7 @@ def prepare():
 	sheet = n.document('Lightshow').sheet(sheet_name)
 
 	sheet.table('Set')
-	for i in range(2, n_addresses + 2):
+	for i in range(start_column, n_addresses + start_column):
 		n.column(i)
 		if value( n.cells[0] ):
 			id = value(n.cells[0])
@@ -44,31 +46,31 @@ def prepare():
 			Show['light'][id]['length'] = value(n.cells[2])
 		if value( n.cells[4] ) != '':
 			Show['address'].append({})
-			Show['address'][i-2]['name'] = str(n.cells[4].column().name())
-			Show['address'][i-2]['id'] = id
-			Show['address'][i-2]['address'] = value(n.cells[4])
+			Show['address'][i-start_column]['name'] = str(n.cells[4].column().name())
+			Show['address'][i-start_column]['id'] = id
+			Show['address'][i-start_column]['address'] = value(n.cells[4])
 
 	sheet.table('Timeline')
 	beat_sum = 0 
-	i = 0
+	i = -1
 	repeat = {}
 	repeat['mode'] = False
-	repeat['timeline'] = []
+	repeat['timeline'] = {}
 
 	def record( timeline, end=False ):
 		print 'repeat():', repeat['mode'], repeat['end'], end
-		if repeat['mode']:
-			repeat['timeline'].append( timeline )
-		else:
-			Show['timeline'].append( timeline )
-			print len( Show['timeline'] )
+		if timeline != None:
+			if repeat['mode']:
+				repeat['timeline'][ repeat[ 'rhythm_name' ] ].append( timeline )
+			else:
+				Show['timeline'].append( timeline )
+				print len( Show['timeline'] )
 		if repeat['end'] and end:
-			Show['timeline'].extend( repeat['timeline'] * repeat['times'] )
+			Show['timeline'].extend( repeat['timeline'][ repeat[ 'rhythm_name' ] ] * repeat['times'] )
 			print len( Show['timeline'] )
 			repeat['mode'] = False
 			repeat['end'] = False
 			repeat['times'] = None
-			repeat['timeline'] = []
 
 	for row in n.rows:
 		print '\n' + str( i ),
@@ -76,24 +78,37 @@ def prepare():
 		timeline = {}
 
 		cells = row.cells().get()
-		beat = value(cells[1])
+		beat = value(cells[start_column - 1])
 		if beat == '':
 			break
 		repeat['end'] = False
-		__repeat = value(cells[0])
+		__repeat = value(cells[start_column - 2])
 		if isinstance(__repeat, int) and __repeat > 0:
 			print 'repeat:', __repeat , 'times'
 			repeat['mode'] = True
 			repeat['beat'] = beat
 			repeat['times'] = __repeat
-			repeat['timeline'] = []
+			rhythm_name = str(value(cells[start_column - 3]))
+			if rhythm_name:
+				repeat['rhythm_name'] = rhythm_name
+				if beat == 0:
+					print 'Repeat', rhythm_name, repeat['times']
+					repeat['end'] = True
+					record( None, end=True )
+				else:
+					print 'Define Repeat', rhythm_name, repeat['times']
+					repeat['timeline'][ repeat['rhythm_name'] ] = []
+			else:
+				repeat['rhythm_name'] = 'default'
+				repeat['timeline']['default'] = []
+
 		elif __repeat == ':||':
 			print 'end repeat'
 			repeat['end'] = True
 		variation = False
 		print 'beat:', beat
 		expend = {}
-		for cell in cells[2:]:
+		for cell in cells[start_column:]:
 			cell_value = value( cell )
 			key = str(cell.column().name())
 			if len(str(cell_value)) > 0:
